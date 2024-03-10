@@ -99,6 +99,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+cmake-*
+
 ### Example user template template
 ### Example user template
 
