@@ -109,3 +109,7 @@ cmake-build-release
 *.iml
 out
 gen
+
+### make build folder ###
+buildDir
+buildDir/
