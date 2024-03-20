@@ -2,3 +2,5 @@ cmake_minimum_required(VERSION 3.2.6)
 
 add_subdirectory(ex0101-standardIO)
 add_subdirectory(ex0102-systemcallIO)
+add_subdirectory(ex0103-systemcallFileOffsetVersion1)
+add_subdirectory(ex0104-systemCallFileOffsetVersion2)
