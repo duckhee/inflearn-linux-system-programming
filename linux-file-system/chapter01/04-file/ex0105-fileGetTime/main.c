@@ -5,7 +5,10 @@
 #include <grp.h>
 /** 시간에 대한 라이브러리 header file */
 #include <time.h>
+#include <memory.h>
+#include <string.h>
 
+char *getMonthName(const int month);
 
 int main(int argc, char **argv) {
     /** 파일에 대한 정보를 저장하기 위한 구조체 */
@@ -98,9 +101,41 @@ int main(int argc, char **argv) {
 
     fileUpdateTime = localtime(&timespec.tv_sec);
     /** tm_mon은 사용할 때 1을 더해줘야한다. -> index가 0부터 시작을 한다. */
+//    printf("%s ", getMonthName(fileUpdateTime->tm_mon));
     printf("%d월 %d %d:%02d:%02d ", (fileUpdateTime->tm_mon + 1), fileUpdateTime->tm_mday, fileUpdateTime->tm_hour,
            fileUpdateTime->tm_min, fileUpdateTime->tm_sec);
     printf("%s\r\n", argv[1]);
 
     return 0;
+}
+
+char *getMonthName(const int month) {
+
+    switch ((month + 1)) {
+        case 1:
+            return "Jan";
+        case 2:
+            return "Feb";
+        case 3:
+            return "Mar";
+        case 4:
+            return "Apr";
+        case 5:
+            return "May";
+        case 6:
+            return "Jun";
+        case 7:
+            return "Jul";
+        case 8:
+            return "Aug";
+        case 9:
+            return "Sep";
+        case 10:
+            return "Oct";
+        case 11:
+            return "Nov";
+        case 12:
+            return "Dec";
+    }
+    return NULL;
 }
