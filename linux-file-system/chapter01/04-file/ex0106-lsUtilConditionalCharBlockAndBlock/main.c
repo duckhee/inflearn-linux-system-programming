@@ -1,12 +1,11 @@
 #include <stdio.h>
-#include <sys/stat.h>
-
 #include <sys/types.h>
-/**  파일에 대한 사용자 권한에 대해서 정의가 되어 있는 파일에서 권한에 대한 정보를 보기 쉽게 하기 위해서 사용하는 함수의 header */
+#include <sys/stat.h>
+#include <unistd.h>
 #include <pwd.h>
-/**  파일에 대한 그룹 권한에 대해서 정의가 되어 있는 파일에서 권한에 대한 정보를 보기 쉽게 하기 위해서 사용하는 함수의 header */
 #include <grp.h>
-
+#include <time.h>
+#include <string.h>
 
 int main(int argc, char **argv) {
     /** 파일에 대한 정보를 저장하기 위한 구조체 */
@@ -15,6 +14,8 @@ int main(int argc, char **argv) {
     struct passwd *pwd = NULL;
     /** 파일에 대한 그룹 권한에 대한 정보를 손쉽게 얻기 위한 객체 */
     struct group *grp = NULL;
+    /** 수정 시간을 담기 위한 구조체 */
+    struct tm *fileUpdateTime = NULL;
     /** permission 을 저장하기 위한 배열 */
     char permission[11] = "----------";
     /** 일반 권한에 대한 정보를 담고 있는 배열 */
@@ -27,7 +28,8 @@ int main(int argc, char **argv) {
         return -1;
     }
     /** 인자로 받은 값에서 파일 정보 가져오기 */
-    stat(argv[1], &fileInformation);
+    /** link file 에 대한 정보를 가져오기 위한 stat 함수 */
+    lstat(argv[1], &fileInformation);
     /** file type 에 따른 출력 */
     /** directory file */
     if (S_ISDIR(fileInformation.st_mode)) {
@@ -86,7 +88,41 @@ int main(int argc, char **argv) {
     grp = getgrgid(fileInformation.st_gid);
     printf("%s ", grp->gr_name);
     /** file 에 대한 사이즈 출력 */
-    printf("%lu ", fileInformation.st_size);
-    printf("%s\r\n", argv[1]);
+    /** char block 과 block 은 사이즈 출력이 아니라 major 번호와 minor 번호를 찍어줘야한다.*/
+    if (permission[0] == 'c' || permission[0] == 'b') {
+        /** major 번호와 minor 번호를 읽어오는 코드 */
+//        printf("version : %d, %d ", (fileInformation.st_rdev >> 8) & 0xFF, (fileInformation.st_rdev) & 0xFF);
+        printf("%lu, %lu ", (fileInformation.st_rdev >> 8) & 0xff, fileInformation.st_rdev & 0xff);
+    } else {
+        printf("%llu ", fileInformation.st_size);
+    }
+    /** file 의 마지막 수정 시간을 출력 */
+    /** mac에서는 st_mtime에 대한 정보를 구조체로 저장하고 있다.*/
+    struct timespec timespec = fileInformation.st_mtimespec;
+    /** linux에서는 st_mtime의 값이 mac 에서는 timespec의 tv_sec로 정의가 되어 있다. */
+//    printf("%lu ", timespec.tv_sec);
+    /** 흔히 보는 시간에 대한 format으로 변경하기 위해서 사용하는 함수가 ctime이다. -> default format 형태로만 출력한다. */
+//    printf("%s", ctime(&timespec.tv_sec));
+
+    fileUpdateTime = localtime(&timespec.tv_sec);
+    /** tm_mon은 사용할 때 1을 더해줘야한다. -> index가 0부터 시작을 한다. */
+//    printf("%s ", getMonthName(fileUpdateTime->tm_mon));
+    printf("%d월 %d %d:%02d:%02d ", (fileUpdateTime->tm_mon + 1), fileUpdateTime->tm_mday, fileUpdateTime->tm_hour,
+           fileUpdateTime->tm_min, fileUpdateTime->tm_sec);
+    /** symbolic link */
+    if (permission[0] == 'l') {
+        /** 원본이 있는 위치를 출력 */
+        char buffer[256];
+        memset(buffer, '\0', sizeof buffer);
+        /** symbolic link 원본 위치의 값을 읽어오기 */
+        int ret = readlink(argv[1], buffer, sizeof buffer);
+        buffer[ret] = '\0';
+        printf("%s -> %s \r\n", argv[1], buffer);
+    } else {
+        printf("%s\r\n", argv[1]);
+    }
+
+    return 0;
+
     return 0;
 }

@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
     stat(argv[1], &fileInformation);
     /** file type 에 따른 출력 */
     /** directory file */
-    if (S_ISCHR(fileInformation.st_mode)) {
+    if (S_ISDIR(fileInformation.st_mode)) {
         permission[0] = 'd';
     }
         /** character block file */

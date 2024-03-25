@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 //        permission[0] = '-';
 //    }
     /** directory file */
-    if (S_ISCHR(fileState.st_mode)) {
+    if (S_ISDIR(fileState.st_mode)) {
         permission[0] = 'd';
     }
         /** character block file */
