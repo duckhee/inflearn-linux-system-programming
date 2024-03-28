@@ -4,14 +4,14 @@ SRCS = main.c
 
 BUILD_DIR = buildDir
 
-TARGET = ex0204DirectoryLsUtilitySplit
-
-CFLAGS = -W -Wall -pedantic-errors
+TARGET = ex0102Unlink
 
 C_EXTRA :=
 C_INC = $(patsubst %,-I%, $(C_EXTRA))
 
 COBJS = $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
+
+CFLAGS = -W -Wall -pedantic-errors
 
 all: clean createdirs pre assemble build
 
@@ -22,13 +22,13 @@ pre: $(SRCS)
 	$(CC) $(CFLAGS) -E $^ > $(BUILD_DIR)/$^.pre
 
 assemble: $(SRCS)
-	$(CC) $(CFLAGS) -S $< -o $(BUILD_DIR)/$(patsubst %.c, %.s, $<)
-
-$(COBJS):$(BUILD_DIR)/%.o : %.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -S $< -o $(BUILD_DIR)/$(patsubst %.c,%.s, $<)
 
 build: $(COBJS)
 	$(CC) $(CFLAGS) -o $(BUILD_DIR)/$(TARGET) $^
+
+$(COBJS): $(BUILD_DIR)/%.o : %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
 	rm -rf ${BUILD_DIR}
