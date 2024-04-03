@@ -6,7 +6,7 @@ SRCS = main.c
 
 BUILD_DIR = buildDir
 
-TARGET = ex0402Execl
+TARGET = ex0103Execv
 
 C_EXTRA :=
 C_INC = $(patsubst %,-I%, $(C_EXTRA))

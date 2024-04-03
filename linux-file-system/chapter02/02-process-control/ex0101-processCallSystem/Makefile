@@ -6,7 +6,7 @@ SRCS = main.c
 
 BUILD_DIR = buildDir
 
-TARGET = ex0301ProcessSystemCall
+TARGET = ex0101ProcessSystemCall
 
 C_EXTRA :=
 C_INC = $(patsubst %,-I%, $(C_EXTRA))

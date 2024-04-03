@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.2.6)
+
+add_subdirectory(ex0101-processCallSystem)
+add_subdirectory(ex0102-execlFunction)
+add_subdirectory(ex0103-execvFunction)
+add_subdirectory(ex0104-execveFunction)
+add_subdirectory(ex0105-execlpFunction)

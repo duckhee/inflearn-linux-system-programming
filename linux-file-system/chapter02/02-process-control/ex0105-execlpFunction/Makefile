@@ -6,10 +6,10 @@ SRCS = main.c
 
 BUILD_DIR = buildDir
 
-TARGET = ex0403Execv
+TARGET = ex0105Execlp
 
 C_EXTRA :=
-C_INC = $(patsubst %,-I%, $(C_EXTRA))
+C_INC = $(patsubst %,-%, $(C_EXTRA))
 
 CFLAGS = -W -Wall -pedantic-errors
 

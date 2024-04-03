@@ -6,10 +6,10 @@ SRCS = main.c
 
 BUILD_DIR = buildDir
 
-TARGET = ex0405Execlp
+TARGET = ex0104Execve
 
 C_EXTRA :=
-C_INC = $(patsubst %,-%, $(C_EXTRA))
+C_INC = $(patsubst %,-%I, $(C_EXTRA))
 
 CFLAGS = -W -Wall -pedantic-errors
 
@@ -38,5 +38,5 @@ build: $(COBJS)
 clean:
 	rm -rf ${BUILD_DIR}
 
-.SUFFIXES: .c .i .s .o .dump
+.SUFFIXES: .c .o
 .PHONNY: clean createdirs pre assemble dump build
