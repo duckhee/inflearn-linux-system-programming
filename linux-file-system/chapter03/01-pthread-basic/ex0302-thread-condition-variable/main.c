@@ -61,7 +61,7 @@ void *producer(void *data) {
 void *consumer(void *data) {
     /** 전역 변수에 대한 동기화 이슈를 제거하기 위한 mutex lock */
 //    pthread_mutex_lock(&mutex);
-    /** conditional variable 에 대한 대기하기 위한 함수 */
+    /** conditional variable 에 대한 대기하기 위한 함수 -> mac에서 확인한 결과 mutex에 대한 잠금을 여기서 진행을 하므로 따로 mutex에 대한 잠금을 진행을 하면, lock획득을 하지 못해서 동작하지 않게 된다. */
     pthread_cond_wait(&cond, &mutex);
     printf("play flag : %d\r\n", g_flag);
     /** 작업이 완료된 후에 mutex lock 에 대한 반환 하는 함수 */
