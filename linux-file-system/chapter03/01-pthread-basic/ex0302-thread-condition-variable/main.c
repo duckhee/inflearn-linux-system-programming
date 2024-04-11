@@ -55,15 +55,15 @@ void *producer(void *data) {
     pthread_cond_signal(&cond);
     /** 작업이 완료된 후에 mutex lock 에 대한 반환 하는 함수 */
     pthread_mutex_unlock(&mutex);
-    return 0;
+		return 0;
 }
 
 void *consumer(void *data) {
     /** 전역 변수에 대한 동기화 이슈를 제거하기 위한 mutex lock */
-    pthread_mutex_lock(&mutex);
+//    pthread_mutex_lock(&mutex);
     /** conditional variable 에 대한 대기하기 위한 함수 */
     pthread_cond_wait(&cond, &mutex);
-    printf("play flag : %d\r\n", g_flag);
+		printf("play flag : %d\r\n", g_flag);
     /** 작업이 완료된 후에 mutex lock 에 대한 반환 하는 함수 */
     pthread_mutex_unlock(&mutex);
     return 0;
