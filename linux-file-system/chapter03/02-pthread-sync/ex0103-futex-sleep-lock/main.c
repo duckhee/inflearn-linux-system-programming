@@ -15,7 +15,7 @@ int main(void) {
     pthread_create(&thread, NULL, sub_routine, NULL);
     /** 대기를 위한 입력 */
     getchar();
-    /** futex unlock */
+    /** futex unlock -> interrupt 를 직접 번호로 호출해서 걸어주는 부분이라 칩에 따라 다르게 동작한다. */
     syscall(202, &mutex, 1, 1);
     /** thread 종료가 될 때 까지 대기하는 함수 */
     pthread_join(thread, NULL);
@@ -23,7 +23,7 @@ int main(void) {
 }
 
 void *sub_routine(void *data) {
-    /** futex lock */
+    /** futex lock -> interrupt 를 직접 번호로 호출해서 걸어주는 부분이라 칩에 따라 다르게 동작한다. */
     syscall(202, &mutex, 0, 1, 0);
     printf("after\r\n");
     return 0;
