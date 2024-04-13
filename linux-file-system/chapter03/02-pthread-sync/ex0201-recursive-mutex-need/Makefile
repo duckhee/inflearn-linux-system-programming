@@ -6,14 +6,14 @@ SRCS = main.c
 
 BUILD_DIR = buildDir
 
-TARGET = ex0102MutexCAS
+TARGET = ex0201RecursiveMutexNeedToCode
 
 C_EXTRA :=
 C_INC = $(patsubst %,-I%, $(C_EXTRA))
 
-CLIBS =
-
 COBJS = $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
+
+CLIBS = -pthread
 
 CFLAGS = -W -Wall -pedantic-errors $(CLIBS)
 

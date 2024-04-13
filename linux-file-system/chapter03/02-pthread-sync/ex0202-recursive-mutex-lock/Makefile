@@ -6,18 +6,19 @@ SRCS = main.c
 
 BUILD_DIR = buildDir
 
-TARGET = ex0102MutexCAS
+TARGET = ex0202RecursiveMutexLock
 
 C_EXTRA :=
-C_INC = $(patsubst %,-I%, $(C_EXTRA))
+C_INC = $(patsubst %,-I%,$<)
 
-CLIBS =
+CLIBS = -pthread
 
 COBJS = $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 
 CFLAGS = -W -Wall -pedantic-errors $(CLIBS)
 
 all: clean createdirs pre assemble dump build
+
 
 createdirs:
 	$(shell mkdir ${BUILD_DIR})
