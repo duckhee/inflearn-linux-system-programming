@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <pthread.h>
 
 void *my_handler(void *);
+
 void *ip_filter(void *);
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -38,6 +40,8 @@ void *my_handler(void *data) {
     /** 더 이상 자를 문자열이 없을 때 까지 진행하는 반복문 */
     while (p) {
         printf("[%s]\r\n", p);
+        /** 느린 동작을 위한 대기 */
+        sleep(1);
         /** 문자열에 대한 정보를 NULL 로 넣어야 다음 위치로 이동하면서 잘라낸다. */
         p = strtok(NULL, "-");
     }
@@ -45,7 +49,7 @@ void *my_handler(void *data) {
     pthread_mutex_unlock(&mutex);
 }
 
-void *ip_filter(void *data){
+void *ip_filter(void *data) {
     char ip[] = "127.0.0.1";
     /** 잘라진 문자열을 받기 위한 포인터 변수 */
     char *p;
@@ -56,6 +60,8 @@ void *ip_filter(void *data){
     /** 더 이상 자를 문자열이 없을 때 까지 진행하는 반복문 */
     while (p) {
         printf("[%s]\r\n", p);
+        /** 느린 동작을 위한 대기 */
+        sleep(1);
         /** 문자열에 대한 정보를 NULL 로 넣어야 다음 위치로 이동하면서 잘라낸다. */
         p = strtok(NULL, ".");
     }
