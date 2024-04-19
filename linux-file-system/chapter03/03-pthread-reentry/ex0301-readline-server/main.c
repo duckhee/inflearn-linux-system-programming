@@ -144,6 +144,7 @@ ssize_t readline(int fd, void *vptr, size_t maxLen) {
 //        rc = my_read(fd, &c, &buffer);
         /** 문자를 읽어와서 버퍼에 값 저장 */
         /** */
+//        if((rc = oldMyRead(fd, &c)) == 1){
         if ((rc = my_read(fd, &c, &buffer)) == 1) {
             *ptr++ = c;
             /* newline is stored, like fgets() */
