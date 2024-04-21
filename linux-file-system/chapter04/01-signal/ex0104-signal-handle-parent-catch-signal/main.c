@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
         /** 부모 process 일 경우 동작 */
         if ((pid = fork()) == 0) {
             /** kernel 에서 특정 프로그램을 실행 */
-            execlp("./sig_child", "./sig_child", (void *) NULL);
+            execlp("../ex0104-signal-handle-child-catch-signal/buildDir/ex0104SignalHandleChildProcess", "./ex0104SignalHandleChildProcess", (void *) NULL);
         }
         /** process 를 저장하는 것 */
         chpid[i] = pid;
