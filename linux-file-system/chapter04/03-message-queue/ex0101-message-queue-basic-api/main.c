@@ -58,7 +58,7 @@ int getFreeSizeOfMessageQueue(int qid, long *pFreeSize) {
     if (qid < 0) {
         return -1;
     }
-    /** messag queue 에 대한 제어하는 함수 */
+    /** messag queue 에 대한 제어하는 함수 -> 메시지 큐에 대한 정보를 가져오는 명령어 이다. */
     rtn = msgctl(qid, IPC_STAT, &stat_q);
     if (rtn < 0) {
         return -1;
