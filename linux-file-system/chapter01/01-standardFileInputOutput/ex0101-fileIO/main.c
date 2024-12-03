@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main() {
+int main(void) {
     /** file의 다루기 위한 file pointer */
     FILE *fp;
     /** 파일의 한 바이트를 가져와서 읽기 위한 변수 */
